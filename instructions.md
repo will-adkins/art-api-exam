@@ -50,7 +50,7 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
       "movement": "impressionism",
       "artist": "Claude Monet",
       "yearCreated": 1907,
-      "museum": {name: "Art Gallery of Ontario", location: "Toronto"}
+      "museum": {"name": "Art Gallery of Ontario", "location": "Toronto"}
     },
     {
       "_id": "painting_last_supper",
@@ -59,7 +59,7 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
       "movement": "Renaissance",
       "artist": "Leonardo da Vinci",
       "yearCreated": 1495,
-      "museum": {name: "Santa Maria delle Grazie", location: "Milan"}
+      "museum": {"name": "Santa Maria delle Grazie", "location": "Milan"}
     },
     {
       "_id": "painting_sunday_afternoon_on_the_island_of_la_grande_jatte",
@@ -68,7 +68,7 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
       "movement": "impressionism",
       "artist": "Georges Seurat",
       "yearCreated": 1884,
-      "museum": {name: "Art Institute of Chicago", location: "Chicago"}
+      "museum": {"name": "Art Institute of Chicago", "location": "Chicago"}
     },
     {
       "_id": "painting_guernica",
@@ -77,7 +77,7 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
       "movement": "surrealism",
       "artist": "Pablo Picasso",
       "yearCreated": 1937,
-      "museum": {name: "Museo Nacional Centro de Arte Reina Sofía", location: "Madrid"}
+      "museum": {"name": "Museo Nacional Centro de Arte Reina Sofía", "location": "Madrid"}
     },
     {
       "_id": "painting_bal_du_moulin_de_la_galette",
@@ -86,7 +86,7 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
       "movement": "impressionism",
       "artist": "Pierre-Auguste Renoires",
       "yearCreated": 1876,
-      "museum": {name: "Musée d’Orsay", location: "Paris"}
+      "museum": {"name": "Musée d’Orsay", "location": "Paris"}
     }
   ]
   ```
@@ -126,7 +126,7 @@ Review the information below and create the described functionality.
     "movement": "surrealism",
     "artist": "Salvador Dali",
     "yearCreated": 1931,
-    "museum": {name: "Musuem of Modern Art", location: "New York"}
+    "museum": {"name": "Musuem of Modern Art", "location": "New York"}
   }
   ```
 
@@ -163,7 +163,7 @@ Review the information below and create the described functionality.
     "movement": "impressionism",
     "artist": "Pierre-Auguste Renoires",
     "yearCreated": 1876,
-    "museum": {name: "Musée d’Orsay", location: "Paris"}
+    "museum": {"name": "Musée d’Orsay", "location": "Paris"}
   }
   ```
 
@@ -190,7 +190,7 @@ Review the information below and create the described functionality.
     "movement": "impressionism",
     "artist": "Pierre-Auguste Renoires",
     "yearCreated": 1877,
-    "museum": {name: "Musée d’Orsay", location: "Paris"}
+    "museum": {"name": "Musée d’Orsay", "location": "Paris"}
   }
   ```
 
@@ -421,7 +421,7 @@ Within the Getting Started section provide guidance on how to:
         "movement": "impressionism",
         "artist": "Pierre-Auguste Renoires",
         "yearCreated": 1876,
-        "museum": {name: "Musée d’Orsay", location: "Paris"}
+        "museum": {"name": "Musée d’Orsay", "location": "Paris"}
       },
       {
         "_id": "painting_starry_night",
@@ -430,7 +430,7 @@ Within the Getting Started section provide guidance on how to:
         "movement": "post-impressionism",
         "artist": "Vincent van Gogh",
         "yearCreated": 1889,
-        "museum": {name: "Museum of Modern Art", location: "New York"}
+        "museum": {"name": "Museum of Modern Art", "location": "New York"}
       }
     ]
     ```
