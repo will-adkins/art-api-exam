@@ -19,7 +19,7 @@ Create a RESTful api that helps to manage a list of famous art.  Include scripts
   ```
   $ git clone <url>
   $ cd art-api-exam
-  $ yarn
+  $ npm install
   ```
 
 ## Steps
