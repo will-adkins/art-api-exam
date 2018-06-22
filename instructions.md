@@ -30,7 +30,7 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
 
 - Using the file named **load-data.js**, create a program that adds the following paintings into a CouchDB database named `{your first name}Art`.  Ex:  `TripArt`:
 
-> When interacting with CouchDB in Cloudant, remember to keep your API key and password (secret) safe.
+> Remember to keep your secret safe. 
 
   ```
   [
