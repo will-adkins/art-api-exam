@@ -93,18 +93,15 @@ Successfully complete the first 4 steps to receive a grade of 'Meets Expectation
 
 - Within your **package.json**, create a `load` script that runs your **load-data.js** program.
 
+
+
 ### Step 2
-
-- Create a file named named **load-index.js** to create Mango query indexes, if necessary.
-- Within your **package.json**, create a `loadIndex` script that runs your **load-index.js** program.
-
-### Step 3
 
 Review the information below and create the described functionality.
 
 - Create a painting
 
-  `POST  /art/paintings`  
+  `POST  /paintings`  
 
   Creates a painting.  The request body must contain a JSON object that represents the painting being created.  The request body must include the `name`, `movement`, `artist`, `yearCreated`, and `museum` fields.  
 
@@ -115,7 +112,7 @@ Review the information below and create the described functionality.
   **Sample Request**
 
   ```
-  POST /art/paintings
+  POST /paintings
   ```
 
   **Sample Request Body JSON Data**
@@ -142,14 +139,14 @@ Review the information below and create the described functionality.
 
 - Retrieve a painting
 
-  `GET  /art/paintings/:id`  
+  `GET  /paintings/:id`  
 
   Retrieves a specific painting as identified by the `:id` path parameter.
 
   **Sample Request**
 
   ```
-  GET /art/paintings/painting_bal_du_moulin_de_la_galette
+  GET /paintings/painting_bal_du_moulin_de_la_galette
   ```
 
   **Sample Response**
@@ -169,14 +166,14 @@ Review the information below and create the described functionality.
 
 - Update a painting
 
-  `PUT /art/paintings/:id`  
+  `PUT /paintings/:id`  
 
-  Updates a specific painting as identified by the `:id` path parameter.  The request body must contain a JSON object that represents the painting being updated.  The request body must include the `_id`, `_rev`, `name`, `movement`, `artist`, `yearCreated`, and `museum` fields.  The `museum` key value must contain an object that includes a `name` and `location`.  Not providing the most recent `_rev` value will cause an `409 - conflict` error to occur.
+  Updates a specific painting as identified by the `:id` path parameter.  The request body must contain a JSON object that represents the painting being updated.  The request body must include the `_id`, `_rev`, `name`, `movement`, `artist`, `yearCreated`, and `museum` fields.  The `museum` key value must contain an object that includes the museum's `name` and `location`.  Not providing the most recent `_rev` value will cause an `409 - conflict` error to occur.
 
   **Sample Request**
 
   ```
-  PUT /art/paintings/painting_bal_du_moulin_de_la_galette
+  PUT /paintings/painting_bal_du_moulin_de_la_galette
   ```
 
   **Sample Request Body JSON Data**
@@ -206,14 +203,14 @@ Review the information below and create the described functionality.
 
 - Delete a painting
 
-  `DELETE /art/paintings/:id`  
+  `DELETE /paintings/:id`  
 
   Deletes a specific painting as identified by the `:id` path parameter.
 
   **Sample Request**
 
   ```
-  DELETE /art/paintings/painting_bal_du_moulin_de_la_galette
+  DELETE /paintings/painting_bal_du_moulin_de_la_galette
   ```
 
   **Sample Response**
@@ -228,13 +225,13 @@ Review the information below and create the described functionality.
 
 - List paintings with pagination
 
-  `GET /art/paintings`
+  `GET /paintings`
 
   Returns a collection of paintings sorted by name. An optional `limit` query parameter provides a limit on the number of objects returned. Default `limit` value is 5. When used in conjunction with `limit`, an optional `lastItem` query parameter provides the ability to return the next page of paintings.
 
   **Examples**
 
-  - `GET /art/paintings?limit=2` returns an JSON array of 2 paintings.
+  - `GET /paintings?limit=2` returns an JSON array of 2 paintings.
 
     **Sample Response**
 
@@ -269,7 +266,7 @@ Review the information below and create the described functionality.
     ]
     ```
 
-  - `GET /art/paintings?limit=2&lastItem=painting_guernica` to get the next page of results:
+  - `GET /paintings?limit=2&lastItem=painting_guernica` to get the next page of results:
 
     **Sample Response**
 
@@ -316,12 +313,11 @@ Within the Getting Started section provide guidance on how to:
   - Install dependencies
   - Establish environment variables
   - Load data
-  - Load indexes
   - Start the API
 
 ### Step 5 - Add a filter
 
-- Create a `filter` query parameter on the `GET /art/paintings` endpoint to provide flexible search capability.  
+- Create a `filter` query parameter on the `GET /paintings` endpoint to provide flexible search capability.  
 - Provide the ability to filter paintings by name, movement, artist and year created.  
 - The `filter` query parameter may be used in conjunction with `limit` but not with `lastItem`.
 
@@ -332,7 +328,7 @@ Within the Getting Started section provide guidance on how to:
   - Filter by movement and limit to five paintings
 
     ```
-    GET /art/paintings?filter=movement:surrealism&limit=5
+    GET /paintings?filter=movement:surrealism&limit=5
     ```
 
     **Sample Results**
@@ -368,7 +364,7 @@ Within the Getting Started section provide guidance on how to:
   - Filter paintings created after 1930.  Limit results to 5 paintings
 
     ```
-    GET /art/paintings?filter=yearCreated:gt:1930&limit=5
+    GET /paintings?filter=yearCreated:gt:1930&limit=5
     ```
 
     **Sample Results**
@@ -394,7 +390,7 @@ Within the Getting Started section provide guidance on how to:
   - Filter by artists greater or equal to Pablo Picasso.  
 
     ```
-    GET /art/paintings?filter=artist:gte:Pablo Picasso
+    GET /paintings?filter=artist:gte:Pablo Picasso
     ```
 
     **Sample Results**
