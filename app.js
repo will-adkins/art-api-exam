@@ -5,10 +5,11 @@ const app = express()
 const bodyParser = require('body-parser')
 const NodeHTTPError = require('node-http-error')
 
-const { not, propOr, isEmpty, pick, pathOr } = require('ramda')
+const { not, propOr, isEmpty, pick, pathOr, prop } = require('ramda')
 
 const checkMissingKeys = require('./lib/check-missing-keys')
 const missingKeysMsg = require('./lib/missing-keys-msg')
+const missingMuseumKeysMsg = require('./lib/missing-museum-keys-msg')
 
 const {
   postPainting,
@@ -40,12 +41,28 @@ app.post('/paintings', function(req, res, next) {
   }
 
   const requiredKeys = ['name', 'movement', 'artist', 'yearCreated', 'museum']
+  const requiredMuseumKeys = ['name', 'location']
 
   if (not(isEmpty(checkMissingKeys(requiredKeys, newPainting)))) {
     next(
       new NodeHTTPError(
         400,
         missingKeysMsg(checkMissingKeys(requiredKeys, newPainting))
+      )
+    )
+  }
+
+  if (
+    not(
+      isEmpty(checkMissingKeys(requiredMuseumKeys, prop('museum', newPainting)))
+    )
+  ) {
+    next(
+      new NodeHTTPError(
+        400,
+        missingMuseumKeysMsg(
+          checkMissingKeys(requiredMuseumKeys, prop('museum', newPainting))
+        )
       )
     )
   }
@@ -96,6 +113,23 @@ app.put('/paintings/:id', function(req, res, next) {
       new NodeHTTPError(
         400,
         missingKeysMsg(checkMissingKeys(requiredKeys, newPainting))
+      )
+    )
+  }
+
+  const requiredMuseumKeys = ['name', 'location']
+
+  if (
+    not(
+      isEmpty(checkMissingKeys(requiredMuseumKeys, prop('museum', newPainting)))
+    )
+  ) {
+    next(
+      new NodeHTTPError(
+        400,
+        missingMuseumKeysMsg(
+          checkMissingKeys(requiredMuseumKeys, prop('museum', newPainting))
+        )
       )
     )
   }
