@@ -10,7 +10,12 @@ const { not, propOr, isEmpty, pick, pathOr } = require('ramda')
 const checkMissingKeys = require('./lib/check-missing-keys')
 const missingKeysMsg = require('./lib/missing-keys-msg')
 
-const { postPainting, getPainting, updatePainting } = require('./dal')
+const {
+  postPainting,
+  getPainting,
+  updatePainting,
+  deletePainting
+} = require('./dal')
 
 app.use(bodyParser.json())
 
@@ -97,6 +102,16 @@ app.put('/paintings/:id', function(req, res, next) {
 
   updatePainting(cleanedPainting)
     .then(putResult => res.status(201).send(putResult))
+    .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
+})
+
+// Delete a painting
+
+app.delete('/paintings/:id', function(req, res, next) {
+  const paintingID = pathOr('', ['params', 'id'], req)
+
+  deletePainting(paintingID)
+    .then(deleteResult => res.status(200).send(deleteResult))
     .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
 })
 

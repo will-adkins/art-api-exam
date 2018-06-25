@@ -23,4 +23,7 @@ const getPainting = id => db.get(id)
 // Put Route
 const updatePainting = painting => db.put(painting)
 
-module.exports = { postPainting, getPainting, updatePainting }
+// Delete Route
+const deletePainting = id => db.get(id).then(painting => db.remove(painting))
+
+module.exports = { postPainting, getPainting, updatePainting, deletePainting }
