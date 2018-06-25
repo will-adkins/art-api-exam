@@ -10,7 +10,7 @@ const { not, propOr, isEmpty, pick, pathOr } = require('ramda')
 const checkMissingKeys = require('./lib/check-missing-keys')
 const missingKeysMsg = require('./lib/missing-keys-msg')
 
-const { postPainting, getPainting } = require('./dal')
+const { postPainting, getPainting, updatePainting } = require('./dal')
 
 app.use(bodyParser.json())
 
@@ -57,6 +57,46 @@ app.get('/paintings/:id', function(req, res, next) {
 
   getPainting(paintingID)
     .then(painting => res.status(200).send(painting))
+    .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
+})
+
+// Update a painting
+
+app.put('/paintings/:id', function(req, res, next) {
+  const newPainting = propOr({}, 'body', req)
+
+  if (isEmpty(newPainting)) {
+    next(
+      new NodeHTTPError(
+        400,
+        `You forgot to add a painting to the request body. Remember to use Content-Type: application/json, as that is the only format this api currently supports.`
+      )
+    )
+  }
+
+  const requiredKeys = [
+    '_id',
+    '_rev',
+    'name',
+    'movement',
+    'artist',
+    'yearCreated',
+    'museum'
+  ]
+
+  if (not(isEmpty(checkMissingKeys(requiredKeys, newPainting)))) {
+    next(
+      new NodeHTTPError(
+        400,
+        missingKeysMsg(checkMissingKeys(requiredKeys, newPainting))
+      )
+    )
+  }
+
+  const cleanedPainting = pick(requiredKeys, newPainting)
+
+  updatePainting(cleanedPainting)
+    .then(putResult => res.status(201).send(putResult))
     .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
 })
 

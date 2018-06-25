@@ -20,4 +20,7 @@ const postPainting = painting => {
 // Get Single Painting Route
 const getPainting = id => db.get(id)
 
-module.exports = { postPainting, getPainting }
+// Put Route
+const updatePainting = painting => db.put(painting)
+
+module.exports = { postPainting, getPainting, updatePainting }
