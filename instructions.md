@@ -22,7 +22,7 @@ Create a RESTful api that helps to manage a list of famous art.  Include scripts
   $ npm install
   ```
 
-## Steps
+## Grading Scale
 
 Successfully complete the first 4 steps to receive a grade of 'Meets Expectations'. Complete step 5 to receive a grade of 'Exceeds Expectations'.  Complete step 6 to receive a grade of 'Outstanding'
 
