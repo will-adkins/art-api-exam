@@ -26,14 +26,15 @@ const updatePainting = painting => db.put(painting)
 // Delete Route
 const deletePainting = id => db.get(id).then(painting => db.remove(painting))
 
-const listPaintings = (limit, lastItem) =>
-  db
+const listPaintings = (limit, lastItem, filterQuery) => {
+  return db
     .allDocs({
       include_docs: true,
       limit: limit,
       startkey: `${lastItem}/ufff0`
     })
     .then(paintings => map(prop('doc'), propOr([], 'rows', paintings)))
+  }
 
 module.exports = {
   postPainting,
