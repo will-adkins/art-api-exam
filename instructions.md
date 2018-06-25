@@ -321,7 +321,9 @@ Within the Getting Started section provide guidance on how to:
 - Provide the ability to filter paintings by name, movement, artist and year created.  
 - The `filter` query parameter may be used in conjunction with `limit` but not with `lastItem`.
 
-  > Paintings may not be filtered and paginated at the same time.  
+  > Paintings may not be filtered and paginated at the same time. 
+
+  > Consider using functional techniques within the dal to filter the documents after they are retrieved from the database.  
 
   **Example**
 
