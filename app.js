@@ -5,12 +5,12 @@ const app = express()
 const bodyParser = require('body-parser')
 const NodeHTTPError = require('node-http-error')
 
-const { not, propOr, isEmpty, pick } = require('ramda')
+const { not, propOr, isEmpty, pick, pathOr } = require('ramda')
 
 const checkMissingKeys = require('./lib/check-missing-keys')
 const missingKeysMsg = require('./lib/missing-keys-msg')
 
-const { postPainting } = require('./dal')
+const { postPainting, getPainting } = require('./dal')
 
 app.use(bodyParser.json())
 
@@ -47,6 +47,16 @@ app.post('/paintings', function(req, res, next) {
 
   postPainting(cleanedPainting)
     .then(postResult => res.status(201).send(postResult))
+    .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
+})
+
+// Retrieve a painting
+
+app.get('/paintings/:id', function(req, res, next) {
+  const paintingID = pathOr('', ['params', 'id'], req)
+
+  getPainting(paintingID)
+    .then(painting => res.status(200).send(painting))
     .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
 })
 

@@ -10,10 +10,14 @@ const db = new PouchDB(
   `${process.env.COUCH_HOSTNAME}${process.env.COUCH_DBNAME}`
 )
 
+// Post Route
 const postPainting = painting => {
   const modifiedPainting = merge({ _id: pkGen(painting) }, painting)
 
   return db.put(modifiedPainting)
 }
 
-module.exports = { postPainting }
+// Get Single Painting Route
+const getPainting = id => db.get(id)
+
+module.exports = { postPainting, getPainting }
