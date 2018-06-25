@@ -162,7 +162,8 @@ app.get('/paintings', function(req, res, next) {
   listPaintings(limit, lastItem, filterQuery)
     .then(paintings => res.status(200).send(paintings))
     .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
-  // db.find Route
+
+  // db.find Route - Ignore
   // listPaintingsFind(limit, lastItem, filterQuery)
   //   .then(paintings => res.status(200).send(paintings))
   //   .catch(err => next(new NodeHTTPError(err.status, err.message, err)))

@@ -9,7 +9,12 @@ const {
   compose,
   propEq,
   not,
-  reduce
+  reduce,
+  head,
+  last,
+  tail,
+  curry,
+  isNil
 } = require('ramda')
 const pkGen = require('./lib/pkGen')
 
@@ -37,9 +42,43 @@ const updatePainting = painting => db.put(painting)
 // Delete Route
 const deletePainting = id => db.get(id).then(painting => db.remove(painting))
 
+// Helper Functions
+
+// greater than comparator predicate
+const gt = curry((key, value, painting) => {
+  return prop(key, painting) > value
+})
+// greater than or equal to comparator predicate
+const gte = curry((key, value, painting) => {
+  return prop(key, painting) >= value
+})
+// less than or equal to comparator predicate
+const lte = curry((key, value, painting) => {
+  return prop(key, painting) <= value
+})
+// less than or equal to comparator predicate
+const lt = curry((key, value, painting) => {
+  return prop(key, painting) < value
+})
+
+// Get list of paintings route
 const listPaintings = (limit, startkey, filterQuery) => {
-  if (filterQuery) {
-    const [key, value] = split(':', filterQuery)
+  if (not(isNil(filterQuery))) {
+    const filterArray = split(':', filterQuery)
+    const key = head(filterArray)
+    const value = last(filterArray)
+    const comparator = head(tail(filterArray))
+
+    const comparatorFn =
+      comparator === 'gt'
+        ? gt(key, value)
+        : comparator === 'gte'
+          ? gte(key, value)
+          : comparator === 'lt'
+            ? lt(key, value)
+            : comparator === 'lte'
+              ? lte(key, value)
+              : propEq(key, value)
 
     return db
       .allDocs({
@@ -49,12 +88,11 @@ const listPaintings = (limit, startkey, filterQuery) => {
         compose(
           reduce((acc, painting) => {
             if (acc.length < limit) {
-              console.log(acc)
               acc.push(painting)
               return acc
             } else return acc
           }, []),
-          filter(propEq(key, value)),
+          filter(comparatorFn),
           map(prop('doc'))
         )(propOr([], 'rows', paintings))
       )
