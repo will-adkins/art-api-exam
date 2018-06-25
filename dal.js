@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { merge } = require('ramda')
+const { merge, map, prop, propOr } = require('ramda')
 const pkGen = require('./lib/pkGen')
 
 const PouchDB = require('pouchdb-core')
@@ -26,4 +26,19 @@ const updatePainting = painting => db.put(painting)
 // Delete Route
 const deletePainting = id => db.get(id).then(painting => db.remove(painting))
 
-module.exports = { postPainting, getPainting, updatePainting, deletePainting }
+const listPaintings = (limit, lastItem) =>
+  db
+    .allDocs({
+      include_docs: true,
+      limit: limit,
+      startkey: `${lastItem}/ufff0`
+    })
+    .then(paintings => map(prop('doc'), propOr([], 'rows', paintings)))
+
+module.exports = {
+  postPainting,
+  getPainting,
+  updatePainting,
+  deletePainting,
+  listPaintings
+}
