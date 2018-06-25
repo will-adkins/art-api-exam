@@ -15,7 +15,8 @@ const {
   getPainting,
   updatePainting,
   deletePainting,
-  listPaintings
+  listPaintings,
+  listPaintingsFind
 } = require('./dal')
 
 app.use(bodyParser.json())
@@ -121,11 +122,16 @@ app.delete('/paintings/:id', function(req, res, next) {
 app.get('/paintings', function(req, res, next) {
   const limit = Number(pathOr(5, ['query', 'limit'], req))
   const lastItem = pathOr(null, ['query', 'lastItem'], req)
+  const filterQuery = pathOr(null, ['query', 'filter'], req)
 
   // db.alldocs Route
-  listPaintings(limit, lastItem)
+  listPaintings(limit, lastItem, filterQuery)
     .then(paintings => res.status(200).send(paintings))
     .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
+  // db.find Route
+  // listPaintingsFind(limit, lastItem, filterQuery)
+  //   .then(paintings => res.status(200).send(paintings))
+  //   .catch(err => next(new NodeHTTPError(err.status, err.message, err)))
 })
 
 app.use(function(err, req, res, next) {

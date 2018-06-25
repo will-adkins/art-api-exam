@@ -19,7 +19,7 @@
     "pouchdb": "6.2.0",
     "pouchdb-adapter-http": "^7.0.0",
     "pouchdb-core": "^7.0.0",
-    "pouchdb-find": "^6.2.0",
+    "pouchdb-find": "^6.4.3",
     "ramda": "^0.24.1"
   },
   "repository": {

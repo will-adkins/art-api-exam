@@ -1,5 +1,16 @@
 require('dotenv').config()
-const { merge, map, prop, propOr } = require('ramda')
+const {
+  merge,
+  map,
+  prop,
+  propOr,
+  split,
+  filter,
+  compose,
+  propEq,
+  not,
+  reduce
+} = require('ramda')
 const pkGen = require('./lib/pkGen')
 
 const PouchDB = require('pouchdb-core')
@@ -26,20 +37,64 @@ const updatePainting = painting => db.put(painting)
 // Delete Route
 const deletePainting = id => db.get(id).then(painting => db.remove(painting))
 
-const listPaintings = (limit, lastItem, filterQuery) => {
+const listPaintings = (limit, startkey, filterQuery) => {
+  if (filterQuery) {
+    const [key, value] = split(':', filterQuery)
+
+    return db
+      .allDocs({
+        include_docs: true
+      })
+      .then(paintings =>
+        compose(
+          reduce((acc, painting) => {
+            if (acc.length < limit) {
+              console.log(acc)
+              acc.push(painting)
+              return acc
+            } else return acc
+          }, []),
+          filter(propEq(key, value)),
+          map(prop('doc'))
+        )(propOr([], 'rows', paintings))
+      )
+  } else
+    return db
+      .allDocs(
+        startkey
+          ? {
+              include_docs: true,
+              limit: limit,
+              startkey: `${startkey}\ufff0`
+            }
+          : {
+              include_docs: true,
+              limit: limit,
+              startkey: 'painting_',
+              endkey: 'painting_\ufff0'
+            }
+      )
+      .then(paintings => map(prop('doc'), propOr([], 'rows', paintings)))
+}
+
+const listPaintingsFind = (limit, startkey, filterQuery) => {
+  //if (filterQuery) {
+  const [key, value] = split(':', filterQuery)
+
   return db
-    .allDocs({
-      include_docs: true,
-      limit: limit,
-      startkey: `${lastItem}/ufff0`
+    .find({
+      selector: { type: 'painting' }
     })
-    .then(paintings => map(prop('doc'), propOr([], 'rows', paintings)))
-  }
+    .then(bookmark => console.log(bookmark))
+    .catch(err => console.log(err))
+  //  } else return listPaintings(limit, startkey)
+}
 
 module.exports = {
   postPainting,
   getPainting,
   updatePainting,
   deletePainting,
-  listPaintings
+  listPaintings,
+  listPaintingsFind
 }
