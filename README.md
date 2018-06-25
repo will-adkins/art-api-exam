@@ -23,6 +23,7 @@ Clone the repo and install its dependencies on your local machine by entering th
 ```
 
 ### Environmental Variables
+
 This API depends on several variables being present in its environment. To set yours up appropriately, create a **.env** file.
 
 The required environmental variables are:
@@ -43,9 +44,34 @@ COUCH_DBNAME=art
 
 To quickly fill your database with test data, simply run the following in the terminal:
 
-```npm run load```
+`npm run load`
 
 This will take the array of documents in the **load-data.js** and bulk add them into the database.
+
+**Example test data:**
+
+```
+const paintings = [
+  {
+    _id: 'painting_starry_night',
+    name: 'The Starry Night',
+    type: 'painting',
+    movement: 'post-impressionism',
+    artist: 'Vincent van Gogh',
+    yearCreated: 1889,
+    museum: { name: 'Museum of Modern Art', location: 'New York' }
+  },
+  {
+    _id: 'painting_water_lilies_nympheas',
+    name: 'Water Lilies Nympheas',
+    type: 'painting',
+    movement: 'impressionism',
+    artist: 'Claude Monet',
+    yearCreated: 1907,
+    museum: { name: 'Art Gallery of Ontario', location: 'Toronto' }
+  }
+]
+```
 
 ### Start the API
 
