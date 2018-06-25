@@ -42,8 +42,9 @@ const updatePainting = painting => db.put(painting)
 // Delete Route
 const deletePainting = id => db.get(id).then(painting => db.remove(painting))
 
+////////////////////////
 // Helper Functions
-
+///////////////////////
 // greater than comparator predicate
 const gt = curry((key, value, painting) => {
   return prop(key, painting) > value
@@ -66,7 +67,10 @@ const listPaintings = (limit, startkey, filterQuery) => {
   if (not(isNil(filterQuery))) {
     const filterArray = split(':', filterQuery)
     const key = head(filterArray)
-    const value = last(filterArray)
+    const value = not(Number.isNaN(Number(value)))
+      ? Number(last(filterArray))
+      : last(filterArray)
+
     const comparator = head(tail(filterArray))
 
     const comparatorFn =
